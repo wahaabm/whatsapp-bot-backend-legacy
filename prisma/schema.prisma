@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String @id
+  chats Chat[]
+}
+
+// Model for a Contact
+model Contact {
+  id               String    @id
+  name             String
+  phone            String?
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+}
+
+// Model for a Message
+model Message {
+  id         String   @id
+  content    String
+  senderId   String
+  receiverId String
+  createdAt  DateTime @default(now())
+  sender     Contact  @relation("SentMessages", fields: [senderId], references: [id])
+  receiver   Contact  @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  chatId     String
+  chat       Chat     @relation(fields: [chatId], references: [id])
+}
+
+// Model for a Chat
+model Chat {
+  id                        String           @id
+  name                      String?
+  messages                  Message[]
+  chatSummary               String           @default("")
+  lastSummarizedMessageDate DateTime?
+  userId                    String
+  user                      User             @relation(fields: [userId], references: [id])
+  summarySessions           SummarySession[]
+}
+
+model SummarySession {
+  id        Int      @id @default(autoincrement())
+  chatId    String
+  summary   String
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  createdAt DateTime @default(now())
+}

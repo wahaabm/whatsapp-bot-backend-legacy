@@ -1,0 +1,40 @@
+{
+  "name": "whatsapp-summary-bot-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend script to handle and store whatsapp messages.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/index.ts",
+    "bun": "bun --hot src/index.ts",
+    "seed": "tsx prisma/seed.ts",
+    "clean": "node utils/cleanUtil.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cookie": "^9.4.0",
+    "@fastify/cors": "^9.0.1",
+    "@google/generative-ai": "^0.17.2",
+    "@prisma/client": "^5.18.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.1",
+    "fastify-socket.io": "^5.1.0",
+    "qrcode-terminal": "^0.12.0",
+    "socket.io": "^4.7.5",
+    "supports-color": "^9.4.0",
+    "tsx": "^4.17.0",
+    "whatsapp-web.js": "^1.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "@types/qrcode-terminal": "^0.12.2",
+    "prisma": "^5.18.0",
+    "typescript": "^5.5.4"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^5.0.10"
+  }
+}
